@@ -1,0 +1,173 @@
+body {
+    margin: 0;
+    padding: 10px 20px 20px 20px;
+    background: #EEE;
+    font-size: 12px;
+}
+
+#main-container {
+    margin: 0 auto 80px auto;
+    width: 776px;
+}
+
+.group {
+}
+
+.group.inter-group {
+    padding: 5px 0;
+}
+
+.group.inter-group.visible {
+    margin: 10px 0;
+    padding: 7px 20px 4px 10px;
+    width: 740px;
+    border: #69F0AE solid 3px;
+    border-radius: 3px;
+    background: white url(sprite.svg) no-repeat -8px -107px;
+}
+
+.group.group-sortable {
+    padding: 10px 20px 7px 10px;
+    width: 746px;
+    background: white url(handler.svg) no-repeat right;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+    transition: box-shadow .2s;
+}
+
+.group.ui-sortable-helper {
+    box-shadow: 0 10px 20px rgba(0,0,0,.19), 0 6px 6px rgba(0,0,0,.23);
+}
+
+.entry {
+    margin-bottom: 3px;
+    height: 22px;
+}
+
+.entry > * {
+    vertical-align: top;
+}
+
+.delete-link {
+    display: inline-block;
+    margin-top: 1px;
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    background: transparent url(sprite.svg) no-repeat -15px -65px;
+}
+
+.delete-link:hover {
+    background: transparent url(sprite.svg) no-repeat -65px -65px;
+}
+
+.entry.ui-sortable-helper .delete-link {
+    background: transparent url(sprite.svg) no-repeat -115px -65px;
+}
+
+.inter-link {
+    display: inline-block;
+    margin: 1px 10px 0;
+    width: 22px;
+    height: 20px;
+    background: transparent url(sprite.svg) no-repeat -164px -65px;
+}
+
+.link-box {
+    display: inline-block;
+    height: 22px;
+}
+
+.link-box > * {
+    vertical-align: top;
+}
+
+.favicon {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border-radius: 3px 0 0 3px;
+    background: #ECEFF1 no-repeat 3px;
+    background-size: 16px;
+}
+
+.link {
+    display: inline-block;
+    overflow: hidden;
+    padding: 0 5px;
+    max-width: 200px;
+    height: 22px;
+    border-radius: 0 3px 3px 0;
+    background: #448AFF;
+    color: white;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font: normal normal 12px/22px "HelveticaNeue";
+    cursor: default;
+}
+
+.link:hover {
+    background-color: #2962FF;
+}
+
+.link-comment {
+    display: inline-block;
+    overflow: hidden;
+    margin-left: 10px;
+    padding: 0;
+    width: 200px;
+    height: 22px;
+    border: none;
+    background: transparent;
+    color: #9E9E9E;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font: normal normal 12px/24px "AvenirNext-Regular", sans-serif;
+}
+
+.link-comment:focus {
+    outline: none;
+    border-bottom: 1px solid #448AFF;
+    color: #448AFF;
+}
+
+.ui-sortable-helper .link-comment {
+}
+
+#toolbar {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    margin-left: -448px;
+    width: 40px;
+}
+
+.ui-button {
+    display: block;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+    transition: box-shadow .2s;
+}
+
+.ui-button:active {
+    box-shadow: 0 2px 8px rgba(0,0,0,.05), 0 8px 17px 0 rgba(0, 0, 0, .2);
+}
+
+.ui-button-icon-only {
+    width: 42px;
+    height: 42px;
+}
+
+#reverse-button {
+    background: white url(sprite.svg) no-repeat -4px -4px;
+}
+
+#clear-all-button {
+    background: white url(sprite.svg) no-repeat -54px -4px;
+}
+
+#clear-all-button:hover {
+    background: white url(sprite.svg) no-repeat -104px -4px;
+}

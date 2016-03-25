@@ -1,0 +1,40 @@
+{
+    "background": {
+        "scripts": ["jquery-2.0.3.min.js", "background.js"]
+    },
+    "browser_action": {
+        "default_icon": {
+            "19": "images/icon19.png",
+            "38": "images/icon38.png"
+        }
+    },
+    "commands": {
+        "analyze_active_tab": {
+            "description": "Analyze the current tab",
+            "suggested_key": {
+                "default": "Alt+Shift+1"
+            }
+        },
+        "send_this_tab_to_onetab": {
+            "description": "Send this tab to OneTab",
+            "suggested_key": {
+                "default": "Alt+Shift+2"
+            }
+        }
+    },
+    "content_scripts": [{
+        "css": ["content.css"],
+        "matches": ["http://*/*", "https://*/*"]
+    }],
+    "description": "Save up to 95% memory and reduce tab clutter",
+    "icons": {
+        "128": "images/extension-icon128.png",
+        "16": "images/extension-icon16.png",
+        "48": "images/extension-icon48.png"
+    },
+    "manifest_version": 2,
+    "name": "OneTab",
+    "options_page": "options.html",
+    "permissions": ["tabs", "<all_urls>", "webRequest", "webRequestBlocking", "contextMenus", "storage"],
+    "version": "1.10"
+}
