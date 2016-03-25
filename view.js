@@ -1,49 +1,30 @@
-function domain(url) {
-    return url.replace(/^[^:]+:\/\/(?:www\.)?([^\/]*).*$/, '$1');
-}
+function domain(url) {return url.replace(/^[^:]+:\/\/(?:www\.)?([^\/]*).*$/, '$1');}
 
-function px_val(elem, key) {
-    return parseInt(elem.css(key).replace(/px/, ''));
-}
+function px_val(elem, key) {return parseInt(elem.css(key).replace(/px/, ''));}
 
 function make_link_box(url, title, favicon) {
-    return $('<div/>', {
-            class: 'link-box'
-        })
-        .append($('<div/>', {
-                class: 'favicon'
-            })
+    return $('<div class=link-box>')
+        .append($('<div class=favicon>')
             .css('background-image', 'url(' + (favicon ? favicon : 'images/globe.svg') + ')'))
-        .append($('<a/>', {
+        .append($('<a>', {
                 class: 'link',
                 href: url,
                 html: title ? title : url
             })
             .click(function(e) {
                 if (CLICK_LOCK) return false;
-                chrome.tabs.create({
-                    url: url,
-                    active: false
-                });
-                if (url && !e.metaKey)
-                    PORT.postMessage({
-                        type: 'delete-records',
-                        keys: [url]
-                    });
+                chrome.tabs.create({url: url, active: false});
+                if (url && !e.metaKey) PORT.postMessage({type: 'delete-records', keys: [url]});
                 return false;
             })
         );
 }
 
 function make_referer_link_box(url, title, favicon) {
-    return $('<div/>', {
-            class: 'link-box'
-        })
-        .append($('<div/>', {
-                class: 'favicon'
-            })
+    return $('<div class=link-box>')
+        .append($('<div class=favicon>')
             .css('background-image', 'url(' + favicon + ')'))
-        .append($('<a/>', {
+        .append($('<a>', {
                 class: 'link',
                 href: url,
                 html: title ? title : url
@@ -51,61 +32,40 @@ function make_referer_link_box(url, title, favicon) {
             .click(function(e) {
                 if (CLICK_LOCK) return false;
                 if (e.metaKey)
-                    chrome.tabs.create({
-                        url: url,
-                        active: false
-                    }, function(tab) {
-                        PORT.postMessage({
-                            type: 'analyze-tab',
-                            tab: tab
-                        });
+                    chrome.tabs.create({url: url, active: false}, function(tab) {
+                        PORT.postMessage({type: 'analyze-tab', tab: tab});
                     });
                 else
-                    chrome.tabs.create({
-                        url: url,
-                        active: true
-                    });
+                    chrome.tabs.create({url: url, active: true});
                 return false;
             }));
 }
 
 function make_delete_box(url) {
-    return $('<div/>', {
-            class: 'delete-link'
-        })
+    return $('<div class=delete-link>')
         .click(function(e) {
-            PORT.postMessage({
-                type: 'delete-records',
-                keys: [url]
-            });
+            PORT.postMessage({type: 'delete-records', keys: [url]});
         });
 }
 
 function make_comment_box(url, comment) {
-    return $('<input/>', {
-            value: comment ? comment : domain(url),
-            class: 'link-comment'
-        })
+    return $('<input class=link-comment>')
+        .val(comment ? comment : domain(url))
         .change(function() {
             PORT.postMessage({
                 type: 'insert-record',
                 key: url,
-                value: {
-                    comment: this.value
-                }
+                value: {comment: this.value}
             });
         });
 }
 
-function construct_new_sorted_key() {
+function construct_new_key_list() {
     return $('.group:has(.entry)')
         .map(function(i, g) {
             return [
-                $('.entry', g).map(function(j, e) {
-                    return $(e).attr('url');
-                })
-                .toArray()
-                .reverse()
+                $('.entry', g).map(function(j, e) {return $(e).attr('url');})
+                .toArray().reverse()
             ];
         })
         .toArray();
@@ -113,50 +73,31 @@ function construct_new_sorted_key() {
 
 CLICK_LOCK = false;
 
-function update(data, sorted_key) {
-    if (data) DATA = data;
-    if (sorted_key) SORTED_KEY = sorted_key;
-    $('#main-container').empty();
-    SORTED_KEY.forEach(function(l) {
-        $('<div/>', {
-                class: 'group inter-group'
-            })
+function update(data, keyl) {
+    $('#main-container').empty()
+        .attr('class', '');
+    keyl.forEach(function(l) {
+        $('<div class="group droppable-gap">')
             .appendTo('#main-container');
 
-        var group = $('<div/>', {
-                class: 'group group-sortable'
-            })
+        var group = $('<div class="group handleable">')
             .appendTo('#main-container');
         l.forEach(function(url) {
-            var val = DATA[url];
+            var val = data[url];
+            var en = $('<div class=entry>').attr('url', url)
+                .append(make_delete_box(url));
             if (val.has_referer)
-                $('<div/>', {
-                    class: 'entry',
-                    url: url
-                })
-                .append(make_delete_box(url))
-                .append(make_link_box(url, val.text, ''))
-                .append($('<div/>', {
-                    class: 'inter-link'
-                }))
-                .append(make_referer_link_box(val.referer_url, val.referer_title, val.referer_favicon))
-                .append(make_comment_box(url, val.comment))
-                .prependTo(group);
+                en.append(make_link_box(url, val.text, ''))
+                .append($('<div class=seperator>'))
+                .append(make_referer_link_box(val.referer_url, val.referer_title, val.referer_favicon));
             else
-                $('<div/>', {
-                    class: 'entry',
-                    url: url
-                })
-                .append(make_delete_box(url))
-                .append(make_link_box(url, val.text, val.referer_favicon))
-                .append(make_comment_box(url, val.comment))
+                en.append(make_link_box(url, val.text, val.referer_favicon));
+            en.append(make_comment_box(url, val.comment))
                 .prependTo(group);
         });
     });
 
-    $('<div/>', {
-            class: 'group inter-group'
-        })
+    $('<div class="group droppable-gap">')
         .appendTo('#main-container');
 
     $('.group').sortable({
@@ -164,54 +105,42 @@ function update(data, sorted_key) {
         items: '.entry',
         axis: 'y',
         delay: 100,
-        start: function() {
-            CLICK_LOCK = true;
-        },
+        start: function() {CLICK_LOCK = true;},
         change: function(e, ui) {
             if (ui.sender === null)
-                $('.group.inter-group').each(function() {
+                $('.group.droppable-gap').each(function() {
                     var s = $(this);
-                    if ($('.entry', s).length > 0) s.addClass('visible'); 
-                    else s.removeClass('visible'); 
+                    if ($('.entry', s).length > 0) s.addClass('visible');
+                    else s.removeClass('visible');
                 });
         },
-        stop: function() {
-            CLICK_LOCK = false;
-        },
+        stop: function() {CLICK_LOCK = false;},
         update: function(e, ui) {
             if (ui.sender === null)
-                PORT.postMessage({
-                    type: 'update-url-list',
-                    sorted_key: construct_new_sorted_key()
-                });
+                PORT.postMessage({type: 'update-url-list', key_list: construct_new_key_list()});
         }
     });
 
     $('#main-container').sortable({
         axis: 'y',
-        items: '.group.group-sortable',
+        items: '.group.handleable',
         delay: 100,
-        start: function () {
-            $('.group.group-sortable').css('margin', '10px 0');
-            $('.group.inter-group').remove();
+        start: function() {
+            $('#main-container').addClass('sorting');
+            $('.group.droppable-gap').remove();
         },
         update: function(e, ui) {
             if (ui.sender === null)
-                PORT.postMessage({
-                    type: 'update-url-list',
-                    sorted_key: construct_new_sorted_key()
-                });
+                PORT.postMessage({type: 'update-url-list', key_list: construct_new_key_list()});
         }
     });
 }
 
-PORT = chrome.runtime.connect({
-    name: "view"
-});
+PORT = chrome.runtime.connect({name: "view"});
 
 PORT.onMessage.addListener(function(msg) {
     if (msg.type == 'update') {
-        update(msg.data, msg.sorted_key);
+        update(msg.data, msg.key_list);
         document.title = Object.keys(msg.data).length + ' Links';
     }
 });
@@ -221,28 +150,16 @@ $('body').keypress(function(e) {
     if (e.which === 122) $('#reverse-button').click();
 });
 
-PORT.postMessage({
-    type: 'init'
-});
+PORT.postMessage({type: 'init'});
 
-$('<a/>', {
-        class: 'ui-button ui-button-icon-only',
-        id: 'reverse-button'
-    })
+$('<a class="ui-button ui-button-icon-only" id=reverse-button>')
     .click(function() {
-        PORT.postMessage({
-            type: 'undo-one-step'
-        });
+        PORT.postMessage({type: 'undo-one-step'});
     })
     .appendTo('#toolbar');
 
-$('<a/>', {
-        class: 'ui-button ui-button-icon-only',
-        id: 'clear-all-button'
-    })
+$('<a class="ui-button ui-button-icon-only" id=clear-all-button>')
     .click(function() {
-        PORT.postMessage({
-            type: 'truncate-all'
-        });
+        PORT.postMessage({type: 'truncate-all'});
     })
     .appendTo('#toolbar');

@@ -1,9 +1,8 @@
 .link-overlay {
     position: absolute;
     z-index: 1000000;
-    background-color: rgba(0,230,118,.1);
 }
 
-.link-overlay.in-onetab-link-overlay {
+.link-overlay.recorded {
     background-color: rgba(0,230,118,.5);
 }
