@@ -1,5 +1,5 @@
 function analyze_tab(t) {
-    chrome.tabs.executeScript(t.id, {code: 'typeof ONETAB_INJECTED == "undefined";'},
+    chrome.tabs.executeScript(t.id, {code: 'typeof MINITAB_INJECTED == "undefined";'},
         function(r) {
             if (r[0]) {
                 chrome.tabs.executeScript(t.id, {file: 'jquery-2.0.3.min.js', runAt: 'document_end'});
@@ -10,7 +10,7 @@ function analyze_tab(t) {
     );
 }
 
-function open_onetab() {
+function open_view() {
     chrome.tabs.create({url: chrome.extension.getURL('view.html')});
 }
 
@@ -81,7 +81,7 @@ function add_to_storage(key, value) {
     });
 }
 
-function send_this_tab_to_onetab() {
+function insert_active_tab() {
     chrome.tabs.query({active: true}, function(tabs) {
         add_to_storage(tabs[0].url, {
             has_referer: false,
@@ -125,12 +125,12 @@ function update_key_list(keyl) {
     });
 }
 
-chrome.browserAction.onClicked.addListener(open_onetab);
+chrome.browserAction.onClicked.addListener(open_view);
 
 chrome.commands.onCommand.addListener(function(command) {
     if (command == 'analyze-active-tab')
         chrome.tabs.query({active: true}, function(tabs) {analyze_tab(tabs[0]);});
-    else if (command == 'insert-active-tab') send_this_tab_to_onetab();
+    else if (command == 'insert-active-tab') insert_active_tab();
 });
 
 chrome.runtime.onConnect.addListener(function(port) {

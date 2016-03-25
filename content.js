@@ -57,7 +57,7 @@ function update_overlays() {
     });
 }
 
-ONETAB_INJECTED = true;
+MINITAB_INJECTED = true;
 HIGHLIGHTED = false;
 URLS = [];
 

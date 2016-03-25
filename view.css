@@ -185,10 +185,23 @@ body {
     background: white url(images/sprite.svg) no-repeat -4px -4px;
 }
 
-.ui-button-icon-only#clear-all-button {
+.ui-button-icon-only#reverse-button:hover {
     background: white url(images/sprite.svg) no-repeat -54px -4px;
 }
 
-.ui-button-icon-only#clear-all-button:hover {
+.ui-button-icon-only#clear-all-button {
     background: white url(images/sprite.svg) no-repeat -104px -4px;
+}
+
+.ui-button-icon-only#clear-all-button:hover {
+    background: white url(images/sprite.svg) no-repeat -154px -4px;
+}
+
+#logo {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    background: transparent url(images/sprite.svg) no-repeat -5px -155px;
 }
