@@ -38,12 +38,12 @@ function update_overlays() {
                 if (URLS.includes(url)) {
                     console.log('delete');
                     PORT.postMessage({
-                        type: 'delete_from_onetab',
+                        type: 'delete-records',
                         keys: [url]
                     });
                 } else {
                     PORT.postMessage({
-                        type: 'save_to_onetab',
+                        type: 'insert-record',
                         key: url,
                         value: {
                             text: text,
@@ -81,6 +81,6 @@ PORT.onMessage.addListener(function(msg) {
 $('body').keypress(function(e) {
     console.log(e.which);
     if (e.which === 122) PORT.postMessage({
-        type: 'undo_last_step'
+        type: 'undo-one-step'
     });
 });

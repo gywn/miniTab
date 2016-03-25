@@ -13,7 +13,7 @@ function make_link_box(url, title, favicon) {
         .append($('<div/>', {
                 class: 'favicon'
             })
-            .css('background-image', 'url(' + (favicon ? favicon : 'globe.svg') + ')'))
+            .css('background-image', 'url(' + (favicon ? favicon : 'images/globe.svg') + ')'))
         .append($('<a/>', {
                 class: 'link',
                 href: url,
@@ -27,7 +27,7 @@ function make_link_box(url, title, favicon) {
                 });
                 if (url && !e.metaKey)
                     PORT.postMessage({
-                        type: 'delete_from_onetab',
+                        type: 'delete-records',
                         keys: [url]
                     });
                 return false;
@@ -56,7 +56,7 @@ function make_referer_link_box(url, title, favicon) {
                         active: false
                     }, function(tab) {
                         PORT.postMessage({
-                            type: 'analyze_tab',
+                            type: 'analyze-tab',
                             tab: tab
                         });
                     });
@@ -75,7 +75,7 @@ function make_delete_box(url) {
         })
         .click(function(e) {
             PORT.postMessage({
-                type: 'delete_from_onetab',
+                type: 'delete-records',
                 keys: [url]
             });
         });
@@ -88,7 +88,7 @@ function make_comment_box(url, comment) {
         })
         .change(function() {
             PORT.postMessage({
-                type: 'save_to_onetab',
+                type: 'insert-record',
                 key: url,
                 value: {
                     comment: this.value
@@ -181,7 +181,7 @@ function update(data, sorted_key) {
         update: function(e, ui) {
             if (ui.sender === null)
                 PORT.postMessage({
-                    type: 'update_sorted_key',
+                    type: 'update-url-list',
                     sorted_key: construct_new_sorted_key()
                 });
         }
@@ -198,7 +198,7 @@ function update(data, sorted_key) {
         update: function(e, ui) {
             if (ui.sender === null)
                 PORT.postMessage({
-                    type: 'update_sorted_key',
+                    type: 'update-url-list',
                     sorted_key: construct_new_sorted_key()
                 });
         }
@@ -231,7 +231,7 @@ $('<a/>', {
     })
     .click(function() {
         PORT.postMessage({
-            type: 'undo_last_step'
+            type: 'undo-one-step'
         });
     })
     .appendTo('#toolbar');
@@ -242,7 +242,7 @@ $('<a/>', {
     })
     .click(function() {
         PORT.postMessage({
-            type: 'clear_all_data'
+            type: 'truncate-all'
         });
     })
     .appendTo('#toolbar');

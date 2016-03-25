@@ -9,14 +9,14 @@
         }
     },
     "commands": {
-        "analyze_active_tab": {
-            "description": "Analyze the current tab",
+        "analyze-active-tab": {
+            "description": "Make the current tab markable",
             "suggested_key": {
                 "default": "Alt+Shift+1"
             }
         },
-        "send_this_tab_to_onetab": {
-            "description": "Send this tab to OneTab",
+        "insert-active-tab": {
+            "description": "Record & close the current tab",
             "suggested_key": {
                 "default": "Alt+Shift+2"
             }

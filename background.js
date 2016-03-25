@@ -4,16 +4,16 @@ function analyze_tab(t) {
         },
         function(r) {
             if (r[0]) {
-                chrome.tabs.executeScript({
+                chrome.tabs.executeScript(t.id, {
                     file: 'jquery-2.0.3.min.js',
                     runAt: 'document_end'
                 });
-                chrome.tabs.executeScript({
+                chrome.tabs.executeScript(t.id, {
                     file: 'content.js',
                     runAt: 'document_end'
                 });
             }
-            chrome.tabs.executeScript({
+            chrome.tabs.executeScript(t.id, {
                 file: 'content-toggle.js'
             });
         }
@@ -166,12 +166,12 @@ function update_sorted_key(sorted_key) {
 chrome.browserAction.onClicked.addListener(open_onetab);
 
 chrome.commands.onCommand.addListener(function(command) {
-    if (command == 'analyze_active_tab') chrome.tabs.query({
+    if (command == 'analyze-active-tab') chrome.tabs.query({
         active: true
     }, function(tabs) {
         analyze_tab(tabs[0]);
     });
-    else if (command == 'send_this_tab_to_onetab') send_this_tab_to_onetab();
+    else if (command == 'insert-active-tab') send_this_tab_to_onetab();
 });
 
 chrome.runtime.onConnect.addListener(function(port) {
@@ -186,11 +186,11 @@ chrome.runtime.onConnect.addListener(function(port) {
         });
     });
     port.onMessage.addListener(function(msg) {
-        if (msg.type == 'save_to_onetab') add_to_storage(msg.key, msg.value);
-        else if (msg.type == 'delete_from_onetab') delete_from_storage(msg.keys);
-        else if (msg.type == 'clear_all_data') update_storage({}, []);
-        else if (msg.type == 'update_sorted_key') update_sorted_key(msg.sorted_key);
-        else if (msg.type == 'undo_last_step') undo();
-        else if (msg.type == 'analyze_tab') analyze_tab(msg.tab);
+        if (msg.type == 'insert-record') add_to_storage(msg.key, msg.value);
+        else if (msg.type == 'delete-records') delete_from_storage(msg.keys);
+        else if (msg.type == 'truncate-all') update_storage({}, []);
+        else if (msg.type == 'update-url-list') update_sorted_key(msg.sorted_key);
+        else if (msg.type == 'undo-one-step') undo();
+        else if (msg.type == 'analyze-tab') analyze_tab(msg.tab);
     });
 });
