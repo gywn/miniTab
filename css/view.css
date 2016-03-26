@@ -36,7 +36,7 @@ body {
     width: 740px;
     border: #69F0AE solid 3px;
     border-radius: 3px;
-    background: white url(images/sprite.svg) no-repeat -8px -107px;
+    background: white url(../images/sprite.svg) no-repeat -8px -107px;
 }
 
 .group.droppable-gap.visible:first-of-type {
@@ -46,7 +46,7 @@ body {
 .group.handleable {
     padding: 10px 20px 7px 10px;
     width: 746px;
-    background: white url(images/handler.svg) no-repeat right;
+    background: white url(../images/handler.svg) no-repeat right;
     box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
     transition: box-shadow .2s;
 }
@@ -74,15 +74,15 @@ body {
     margin-right: 10px;
     width: 20px;
     height: 20px;
-    background: transparent url(images/sprite.svg) no-repeat -15px -65px;
+    background: transparent url(../images/sprite.svg) no-repeat -15px -65px;
 }
 
 .entry .delete-link:hover {
-    background: transparent url(images/sprite.svg) no-repeat -65px -65px;
+    background: transparent url(../images/sprite.svg) no-repeat -65px -65px;
 }
 
 .entry.ui-sortable-helper .delete-link {
-    background: transparent url(images/sprite.svg) no-repeat -115px -65px;
+    background: transparent url(../images/sprite.svg) no-repeat -115px -65px;
 }
 
 .entry .link-box {
@@ -128,7 +128,7 @@ body {
     margin: 1px 10px 0;
     width: 22px;
     height: 20px;
-    background: transparent url(images/sprite.svg) no-repeat -164px -65px;
+    background: transparent url(../images/sprite.svg) no-repeat -164px -65px;
 }
 
 .entry .link-comment {
@@ -182,19 +182,19 @@ body {
 }
 
 .ui-button-icon-only#reverse-button {
-    background: white url(images/sprite.svg) no-repeat -4px -4px;
+    background: white url(../images/sprite.svg) no-repeat -4px -4px;
 }
 
 .ui-button-icon-only#reverse-button:hover {
-    background: white url(images/sprite.svg) no-repeat -54px -4px;
+    background: white url(../images/sprite.svg) no-repeat -54px -4px;
 }
 
 .ui-button-icon-only#clear-all-button {
-    background: white url(images/sprite.svg) no-repeat -104px -4px;
+    background: white url(../images/sprite.svg) no-repeat -104px -4px;
 }
 
 .ui-button-icon-only#clear-all-button:hover {
-    background: white url(images/sprite.svg) no-repeat -154px -4px;
+    background: white url(../images/sprite.svg) no-repeat -154px -4px;
 }
 
 #logo {
@@ -203,5 +203,5 @@ body {
     bottom: 20px;
     width: 40px;
     height: 40px;
-    background: transparent url(images/sprite.svg) no-repeat -5px -155px;
+    background: transparent url(../images/sprite.svg) no-repeat -5px -155px;
 }

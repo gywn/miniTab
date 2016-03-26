@@ -1,9 +1,9 @@
 {
-    "background": {"scripts": ["jquery-2.0.3.min.js", "background.js"]},
+    "background": {"scripts": ["lib/jquery-2.0.3.min.js", "js/background.js"]},
     "browser_action": {
         "default_icon": {
-            "19": "images/logo-19.png",
-            "38": "images/logo-38.png"
+            "19": "images/icon-19.png",
+            "38": "images/icon-38.png"
         }
     },
     "commands": {
@@ -17,18 +17,18 @@
         }
     },
     "content_scripts": [{
-        "js": ["content-persistent.js"],
-        "css": ["content.css"],
+        "js": ["js/content-persistent.js"],
+        "css": ["css/content.css"],
         "matches": ["http://*/*", "https://*/*"]
     }],
     "description": "A lightweight tabs keeper",
     "icons": {
-        "16": "images/logo-16.png",
-        "48": "images/logo-48.png",
-        "128": "images/logo-128.png"
+        "16": "images/icon-16.png",
+        "48": "images/icon-48.png",
+        "128": "images/icon-128.png"
     },
     "manifest_version": 2,
     "name": "miniTab",
     "permissions": ["tabs", "<all_urls>", "storage", "contextMenus"],
-    "version": "1.00"
+    "version": "1.0"
 }

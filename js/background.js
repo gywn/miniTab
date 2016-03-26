@@ -143,8 +143,8 @@ function query_highlight(tab, on_hl, on_not_hl) {
         function(r) {
             if (chrome.runtime.lastError) {activate_view();} else {
                 if (r[0][0]) {
-                    chrome.tabs.executeScript(tab.id, {file: 'jquery-2.0.3.min.js'});
-                    chrome.tabs.executeScript(tab.id, {file: 'content.js'});
+                    chrome.tabs.executeScript(tab.id, {file: 'lib/jquery-2.0.3.min.js'});
+                    chrome.tabs.executeScript(tab.id, {file: 'js/content.js'});
                 }
                 if (r[0][1]) {if (on_hl) on_hl(tab);} else {if (on_not_hl) on_not_hl(tab);}
             }
@@ -153,7 +153,7 @@ function query_highlight(tab, on_hl, on_not_hl) {
 }
 
 function toggle_highlight(tab) {
-    chrome.tabs.executeScript(tab.id, {file: 'content-toggle.js'});
+    chrome.tabs.executeScript(tab.id, {file: 'js/content-toggle.js'});
 }
 
 function archive_tab(tab) {

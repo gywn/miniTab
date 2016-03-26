@@ -41,21 +41,10 @@ function make_referer_link_box(url, title, favicon) {
             })
             .click(function(e) {
                 if (CLICK_LOCK) return false;
-                if (e.metaKey)
-                    chrome.tabs.create({
-                        url: url,
-                        active: false
-                    }, function(tab) {
-                        PORT.postMessage({
-                            type: 'toggle-highlight',
-                            tab: tab
-                        });
-                    });
-                else
-                    chrome.tabs.create({
-                        url: url,
-                        active: true
-                    });
+                chrome.tabs.create({
+                    url: url,
+                    active: !e.metaKey
+                });
                 return false;
             }));
 }
