@@ -3,40 +3,59 @@ function domain(url) {return url.replace(/^[^:]+:\/\/(?:www\.)?([^\/]*).*$/, '$1
 function px_val(elem, key) {return parseInt(elem.css(key).replace(/px/, ''));}
 
 function make_link_box(url, title, favicon) {
+    if ($.trim(title) === '') title = url;
     return $('<div class=link-box>')
         .append($('<div class=favicon>')
             .css('background-image', 'url(' + (favicon ? favicon : 'images/globe.svg') + ')'))
         .append($('<a>', {
                 class: 'link',
                 href: url,
-                html: title ? title : url
+                html: title,
+                title: title
             })
             .click(function(e) {
                 if (CLICK_LOCK) return false;
-                chrome.tabs.create({url: url, active: false});
-                if (url && !e.metaKey) PORT.postMessage({type: 'delete-records', keys: [url]});
+                chrome.tabs.create({
+                    url: url,
+                    active: false
+                });
+                if (url && !e.metaKey) PORT.postMessage({
+                    type: 'delete-records',
+                    keys: [url]
+                });
                 return false;
             })
         );
 }
 
 function make_referer_link_box(url, title, favicon) {
+    if ($.trim(title) === '') title = url;
     return $('<div class=link-box>')
         .append($('<div class=favicon>')
             .css('background-image', 'url(' + favicon + ')'))
         .append($('<a>', {
                 class: 'link',
                 href: url,
-                html: title ? title : url
+                html: title,
+                title: title
             })
             .click(function(e) {
                 if (CLICK_LOCK) return false;
                 if (e.metaKey)
-                    chrome.tabs.create({url: url, active: false}, function(tab) {
-                        PORT.postMessage({type: 'analyze-tab', tab: tab});
+                    chrome.tabs.create({
+                        url: url,
+                        active: false
+                    }, function(tab) {
+                        PORT.postMessage({
+                            type: 'toggle-highlight',
+                            tab: tab
+                        });
                     });
                 else
-                    chrome.tabs.create({url: url, active: true});
+                    chrome.tabs.create({
+                        url: url,
+                        active: true
+                    });
                 return false;
             }));
 }
@@ -44,7 +63,10 @@ function make_referer_link_box(url, title, favicon) {
 function make_delete_box(url) {
     return $('<div class=delete-link>')
         .click(function(e) {
-            PORT.postMessage({type: 'delete-records', keys: [url]});
+            PORT.postMessage({
+                type: 'delete-records',
+                keys: [url]
+            });
         });
 }
 
@@ -53,7 +75,7 @@ function make_comment_box(url, comment) {
         .val(comment ? comment : domain(url))
         .change(function() {
             PORT.postMessage({
-                type: 'insert-record',
+                type: 'insert-record-without-tab',
                 key: url,
                 value: {comment: this.value}
             });
@@ -117,7 +139,10 @@ function update(data, keyl) {
         stop: function() {CLICK_LOCK = false;},
         update: function(e, ui) {
             if (ui.sender === null)
-                PORT.postMessage({type: 'update-url-list', key_list: construct_new_key_list()});
+                PORT.postMessage({
+                    type: 'update-key-list',
+                    key_list: construct_new_key_list()
+                });
         }
     });
 
@@ -131,7 +156,10 @@ function update(data, keyl) {
         },
         update: function(e, ui) {
             if (ui.sender === null)
-                PORT.postMessage({type: 'update-url-list', key_list: construct_new_key_list()});
+                PORT.postMessage({
+                    type: 'update-key-list',
+                    key_list: construct_new_key_list()
+                });
         }
     });
 }
@@ -141,7 +169,7 @@ PORT = chrome.runtime.connect({name: "view"});
 PORT.onMessage.addListener(function(msg) {
     if (msg.type == 'update') {
         update(msg.data, msg.key_list);
-        document.title = Object.keys(msg.data).length + ' Links';
+        document.title = Object.keys(msg.data).length + ' Links | miniTab';
     }
 });
 
