@@ -167,8 +167,6 @@ $('body').keypress(function(e) {
     if (e.which === 122) $('#reverse-button').click();
 });
 
-PORT.postMessage({type: 'init'});
-
 $('<a class="ui-button ui-button-icon-only" id=reverse-button>')
     .click(function() {
         PORT.postMessage({type: 'undo-one-step'});
@@ -180,3 +178,5 @@ $('<a class="ui-button ui-button-icon-only" id=clear-all-button>')
         PORT.postMessage({type: 'truncate-all'});
     })
     .appendTo('#toolbar');
+
+PORT.postMessage({type: 'init'});

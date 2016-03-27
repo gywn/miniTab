@@ -1,11 +1,3 @@
-function px_val(elem, key) {return parseInt(elem.css(key).replace(/px/, ''));}
-
-function get_favicon() {
-    var f = $('link[rel="icon"][href], link[rel="apple-touch-icon"][href], link[rel="shortcut icon"][href]');
-    if (f.length > 0) return f[0].href;
-    else return '';
-}
-
 function prepare_anchor(a) {
     a.attr('old-style', a.attr('style') || '')
         .attr('link-prepared', '')
