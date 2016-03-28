@@ -1,5 +1,5 @@
 <div align=center>
-<img src="https://raw.githubusercontent.com/hijack111/miniTab/master/images/icon.svg"/>
+<object data="https://raw.githubusercontent.com/hijack111/miniTab/master/images/icon.svg" type="image/svg+xml"></objdect>
 </div>
 # miniTab
 
