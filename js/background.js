@@ -51,18 +51,19 @@ function key_list_include(keyl, k) {
 
 function extend_with_tab(value, tab) {
     return $.extend({
-        referer_url: tab.url,
-        referer_title: tab.title,
-        referer_favicon: tab.favIconUrl
+        type: 'referred_link',
+        referrer_url: tab.url,
+        referrer_title: tab.title,
+        referrer_favicon: tab.favIconUrl
     }, value);
 }
 
 DEFAULT_VALUE = {
     text: '',
-    has_referer: true,
-    referer_url: '',
-    referer_title: '',
-    referer_favicon: '',
+    type: 'simple_link',
+    referrer_url: '',
+    referrer_title: '',
+    referrer_favicon: '',
     comment: ''
 };
 
@@ -159,9 +160,8 @@ function toggle_highlight(tab) {
 function archive_tab(tab) {
     if (tab.url === chrome.extension.getURL('view.html')) return false;
     add_to_storage(tab.url, {
-        has_referer: false,
         text: tab.title,
-        referer_favicon: tab.favIconUrl // borrow for favicon
+        referrer_favicon: tab.favIconUrl // borrow for favicon
     });
     chrome.tabs.remove(tab.id);
 }

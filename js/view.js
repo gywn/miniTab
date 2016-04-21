@@ -28,7 +28,7 @@ function make_link_box(url, title, favicon) {
         );
 }
 
-function make_referer_link_box(url, title, favicon) {
+function make_referrer_link_box(url, title, favicon) {
     if ($.trim(title) === '') title = url;
     return $('<div class=link-box>')
         .append($('<div class=favicon>')
@@ -59,16 +59,16 @@ function make_delete_box(url) {
         });
 }
 
-function make_comment_box(url, comment) {
-    return $('<input class=link-comment>')
-        .val(comment ? comment : domain(url))
-        .change(function() {
-            PORT.postMessage({
-                type: 'insert-record-without-tab',
-                key: url,
-                value: {comment: this.value}
-            });
+function make_comment_box(url, comment, heading) {
+    var cm = heading ? $('<input class=heading>').val(comment) :
+        $('<input class=link-comment>').val(comment ? comment : domain(url));
+    return cm.change(function() {
+        PORT.postMessage({
+            type: 'insert-record-without-tab',
+            key: url,
+            value: {comment: this.value}
         });
+    });
 }
 
 function construct_new_key_list() {
@@ -97,14 +97,23 @@ function update(data, keyl) {
             var val = data[url];
             var en = $('<div class=entry>').attr('url', url)
                 .append(make_delete_box(url));
-            if (val.has_referer)
-                en.append(make_link_box(url, val.text, ''))
-                .append($('<div class=seperator>'))
-                .append(make_referer_link_box(val.referer_url, val.referer_title, val.referer_favicon));
-            else
-                en.append(make_link_box(url, val.text, val.referer_favicon));
-            en.append(make_comment_box(url, val.comment))
-                .prependTo(group);
+            switch (val.type) {
+                case 'referred_link':
+                    en.append(make_link_box(url, val.text, ''))
+                    .append($('<div class=seperator>'))
+                    .append(make_referrer_link_box(val.referrer_url, val.referrer_title, val.referrer_favicon))
+                    .append(make_comment_box(url, val.comment));
+                    break;
+                case 'simple_link':
+                    en.append(make_link_box(url, val.text, val.referrer_favicon))
+                    .append(make_comment_box(url, val.comment));
+                    break;
+                case 'comment':
+                    en.append(make_comment_box(url, val.comment, true));
+                    break;
+                default:
+            }
+            en.prependTo(group);
         });
     });
 
@@ -170,6 +179,16 @@ $('body').keypress(function(e) {
 $('<a class="ui-button ui-button-icon-only" id=reverse-button>')
     .click(function() {
         PORT.postMessage({type: 'undo-one-step'});
+    })
+    .appendTo('#toolbar');
+
+$('<a class="ui-button ui-button-icon-only" id=insert-heading-button>')
+    .click(function() {
+        PORT.postMessage({
+            type: 'insert-record-without-tab',
+            key: Math.random().toString(32).replace(/^0\./, ''),
+            value: {type: 'comment'}
+        });
     })
     .appendTo('#toolbar');
 

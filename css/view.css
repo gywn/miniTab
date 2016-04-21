@@ -32,7 +32,7 @@ body {
 
 .group.droppable-gap.visible {
     margin: 10px 0;
-    padding: 7px 20px 4px 10px;
+    padding: 4px 20px 4px 10px;
     width: 740px;
     border: #69F0AE solid 3px;
     border-radius: 3px;
@@ -44,7 +44,7 @@ body {
 }
 
 .group.handleable {
-    padding: 10px 20px 7px 10px;
+    padding: 7px 20px 7px 10px;
     width: 746px;
     background: white url(../images/handler.svg) no-repeat right;
     box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
@@ -60,7 +60,7 @@ body {
 }
 
 .entry {
-    margin-bottom: 3px;
+    margin: 3px 0;
     height: 22px;
 }
 
@@ -143,12 +143,37 @@ body {
     color: #9E9E9E;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font: normal normal 12px/24px "AvenirNext-Regular", sans-serif;
+    font: normal normal 12px/22px "AvenirNext-Regular", sans-serif;
 }
 
 .entry .link-comment:focus {
     outline: none;
     border-bottom: 1px solid #448AFF;
+    color: #448AFF;
+}
+
+.entry .heading {
+    display: inline-block;
+    overflow: hidden;
+    margin-left: 0;
+    padding: 0;
+    width: 716px;
+    height: 22px;
+    border: none;
+    background: transparent;
+    color: #9E9E9E;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font: normal normal 14px/22px "AvenirNext-Medium", "LucidaSans", sans-serif;
+}
+
+.entry:hover .heading {
+    width: 232px;
+}
+
+.entry .heading:focus {
+    outline: none;
+    width: 716px;
     color: #448AFF;
 }
 
@@ -195,6 +220,14 @@ body {
 
 .ui-button-icon-only#clear-all-button:hover {
     background: white url(../images/sprite.svg) no-repeat -154px -4px;
+}
+
+.ui-button-icon-only#insert-heading-button {
+    background: white url(../images/sprite.svg) no-repeat -104px -154px;
+}
+
+.ui-button-icon-only#insert-heading-button:hover {
+    background: white url(../images/sprite.svg) no-repeat -154px -154px;
 }
 
 #logo {

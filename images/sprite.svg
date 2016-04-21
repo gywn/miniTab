@@ -19,8 +19,11 @@
 <rect x="50" fill="none" width="50" height="50"/>
 <rect y="50" fill="none" width="50" height="50"/>
 <rect x="100" fill="none" width="50" height="50"/>
+<rect x="100" y="150" fill="none" width="50" height="50"/>
+<rect x="50" y="150" fill="none" width="50" height="50"/>
 <polygon fill="#999999" points="130.675,34.761 119.325,34.761 116.56,15.239 133.44,15.239 "/>
 <rect x="150" fill="none" width="50" height="50"/>
+<rect x="150" y="150" fill="none" width="50" height="50"/>
 <polygon fill="#FF1744" points="180.675,34.761 169.325,34.761 166.56,15.239 183.44,15.239 "/>
 <line fill="none" stroke="#999999" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="20.5" y1="79.5" x2="29.5" y2="70.5"/>
 <line fill="none" stroke="#999999" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="29.5" y1="79.5" x2="20.5" y2="70.5"/>
@@ -53,5 +56,17 @@
 		c1.123,1.638,2.272,4.039,2.272,9.44v11.987V195h5.714v-17.702C22.143,170.483,20.498,167,18.869,164.625z"/>
 	<path fill="#B0BEC5" d="M31.131,164.625c-1.63,2.375-3.274,5.858-3.274,12.673V195h5.714v-5.714v-11.987
 		c0-5.401,1.149-7.802,2.272-9.44c0.947-1.382,2.167-2.553,3.442-3.53v24.958V195H45v-40C45,155,35.885,157.699,31.131,164.625z"/>
+</g>
+<g>
+	<g>
+		<path fill="#999999" d="M122.488,182.5v-6.271h-5.847v6.271h-3.623v-15h3.623v5.678h5.847V167.5h3.622v15H122.488z"/>
+	</g>
+	<polygon fill="#999999" points="131.366,179.65 131.366,170.35 136.983,175 	"/>
+</g>
+<g>
+	<g>
+		<path fill="#448AFF" d="M172.488,182.5v-6.271h-5.847v6.271h-3.623v-15h3.623v5.678h5.847V167.5h3.622v15H172.488z"/>
+	</g>
+	<polygon fill="#448AFF" points="181.366,179.65 181.366,170.35 186.983,175 	"/>
 </g>
 </svg>
