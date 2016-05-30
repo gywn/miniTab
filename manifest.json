@@ -30,5 +30,5 @@
     "manifest_version": 2,
     "name": "miniTab",
     "permissions": ["tabs", "<all_urls>", "storage", "contextMenus"],
-    "version": "1.01"
+    "version": "2"
 }
