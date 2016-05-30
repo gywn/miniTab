@@ -1,4 +1,6 @@
-FRONTENDS = [];
+/* global chrome, $ */
+
+var FRONTENDS = [];
 
 function update_frontend(data, keyl) {
     FRONTENDS.forEach(function(port) {
@@ -10,7 +12,7 @@ function update_frontend(data, keyl) {
     });
 }
 
-HISTORY = [];
+var HISTORY = [];
 
 function update_from_storage() {
     chrome.storage.local.get({
@@ -58,7 +60,7 @@ function extend_with_tab(value, tab) {
     }, value);
 }
 
-DEFAULT_VALUE = {
+var DEFAULT_VALUE = {
     text: '',
     type: 'simple_link',
     referrer_url: '',
@@ -139,7 +141,7 @@ function query_active_tab(on_found) {
 function query_highlight(tab, on_hl, on_not_hl) {
     chrome.tabs.executeScript(tab.id, {
             code: '[typeof MINITAB_INJECTED === "undefined",' +
-                'typeof HIGHLIGHTED !== "undefined" && HIGHLIGHTED]'
+                'typeof MINITAB_HIGHLIGHTED !== "undefined" && MINITAB_HIGHLIGHTED]'
         },
         function(r) {
             if (chrome.runtime.lastError) {activate_view();} else {
@@ -174,7 +176,7 @@ function activate_view() {
 
 function toggle_highlight_after_query(tab) {query_highlight(tab, toggle_highlight, toggle_highlight);}
 
-RIGHT_CLICK_INFO = null;
+var RIGHT_CLICK_INFO = null;
 
 chrome.runtime.onMessage.addListener(function(msg, sender) {
     if (msg.type === 'cache-right-click-info') RIGHT_CLICK_INFO = {
@@ -234,6 +236,6 @@ chrome.contextMenus.create({
 });
 
 chrome.commands.onCommand.addListener(function(command) {
-    if (command == 'archive-active-tab') cmd_archive_active_tab();
-    else if (command == 'toggle-active-tab-highlight') cmd_toggle_active_tab_highlight();
+    if (command === 'archive-active-tab') cmd_archive_active_tab();
+    else if (command === 'toggle-active-tab-highlight') cmd_toggle_active_tab_highlight();
 });

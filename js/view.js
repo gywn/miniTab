@@ -1,3 +1,5 @@
+/* global chrome, $ */
+
 function domain(url) {return url.replace(/^[^:]+:\/\/(?:www\.)?([^\/]*).*$/, '$1');}
 
 function px_val(elem, key) {return parseInt(elem.css(key).replace(/px/, ''));}
@@ -82,7 +84,7 @@ function construct_new_key_list() {
         .toArray();
 }
 
-CLICK_LOCK = false;
+var CLICK_LOCK = false;
 
 function update(data, keyl) {
     $('#main-container').empty()
@@ -162,10 +164,10 @@ function update(data, keyl) {
     });
 }
 
-PORT = chrome.runtime.connect({name: "view"});
+var PORT = chrome.runtime.connect({name: 'view'});
 
 PORT.onMessage.addListener(function(msg) {
-    if (msg.type == 'update') {
+    if (msg.type === 'update') {
         update(msg.data, msg.key_list);
         document.title = Object.keys(msg.data).length + ' Links | miniTab';
     }
