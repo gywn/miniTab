@@ -79,8 +79,9 @@ function add_to_storage(key, value) {
         var val = $.extend({}, DEFAULT_VALUE, data[key], value);
         data[key] = val;
         if (!key_list_include(keyl, key))
-            if (keyl.length > 0) keyl[0].push(key);
-            else keyl.push([key]);
+            if (keyl.length > 0 &&
+                    data[keyl[0][keyl[0].length - 1]].type !== 'comment') keyl[0].push(key);
+            else keyl.unshift([key]);
         update_storage(data, keyl);
     });
 }
